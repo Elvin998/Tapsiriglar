@@ -1,0 +1,264 @@
+İmport json
+ 
+
+Records = []
+
+ 
+
+Def welcome_screen():
+
+   Print(“””=== Welcome to Budget Tracker ===
+
+         
+
+=== Design BY Elvin Allahverdiyev ===”””)
+
+ 
+
+Def main_menu():
+
+   Print(“\nMain Menu:”)
+
+   Print(“1. Add a new record”)
+
+   Print(“2. View all records”)
+
+   Print(“3. Search a record”)
+
+   Print(“4. Update a record”)
+
+   Print(“5. Delete a record”)
+
+   Print(“6. Show summary stats”)
+
+   Print(“7. Save to file”)
+
+   Print(“8. Load from file”)
+
+   Print(“9. Clear all data”)
+
+   Print(“10. Help”)
+
+   Print(“0. Exit”)
+
+ 
+
+Def add_record():
+
+   Name = input(“Enter name: “)
+
+   Amount = float(input(“Enter amount: “))
+
+   Category = input(“Enter category: “)
+
+   Record = {“name”: name, “amount”: amount, “category”: category}
+
+   Records.append(record)
+
+   Print(“Record added.”)
+
+ 
+
+Def view_records():
+
+   Print(“\n--- All Records ---“)
+
+   For i, r in enumerate(records):
+
+       Print(f”{i+1}. Name: {r[‘name’]}, Amount: {r[‘amount’]}, Category: {r[‘category’]}”)
+
+ 
+
+Def search_record():
+
+   Keyword = input(“Search by name: “)
+
+   Found = False
+
+   For r in records:
+
+       İf r[“name”].lower() == keyword.lower():
+
+           Print(f”Found: Name: {r[‘name’]}, Amount: {r[‘amount’]}, Category: {r[‘category’]}”)
+
+           Found = True
+
+   İf not found:
+
+       Print(“No record found.”)
+
+ 
+
+Def update_record():
+
+   View_records()
+
+   Try:
+
+       İdx = int(input(“Record number to update: “)) – 1
+
+       İf 0 <= idx < len(records):
+
+           Records[idx][‘name’] = input(“New name: “)
+
+           Records[idx][‘amount’] = float(input(“New amount: “))
+
+           Records[idx][‘category’] = input(“New category: “)
+
+           Print(“Record updated.”)
+
+       Else:
+
+           Print(“Invalid record number.”)
+
+   Except:
+
+       Print(“Invalid input.”)
+
+ 
+
+Def delete_record():
+
+   View_records()
+
+   Try:
+
+       İdx = int(input(“Record number to delete: “)) – 1
+
+       İf 0 <= idx < len(records):
+
+           Records.pop(idx)
+
+           Print(“Record deleted.”)
+
+       Else:
+
+           Print(“Invalid number.”)
+
+   Except:
+
+       Print(“Invalid input.”)
+
+ 
+
+Def show_summary():
+
+   Total = sum(r[‘amount’] for r in records)
+
+   Print(f”Total Balance: {total}”)
+
+   İf records:
+
+       Avg = total / len(records)
+
+       Print(f”Average Amount: {avg:.2f}”)
+
+ 
+
+Def save_to_file():
+
+   With open(“records.json”, “w”) as f:
+
+       Json.dump(records, f)
+
+   Print(“Data saved to file.”)
+
+ 
+
+Def load_from_file():
+
+   Global records
+
+   Try:
+
+       With open(“records.json”, “r”) as f:
+
+           Records = json.load(f)
+
+       Print(“Data loaded from file.”)
+
+   Except:
+
+       Print(“File not found or error reading file.”)
+
+ 
+
+Def clear_all_data():
+
+   Confirm = input(“Are you sure? (yes/no): “)
+
+   İf confirm.lower() == “yes”:
+
+       Records.clear()
+
+       Print(“All data cleared.”)
+
+ 
+
+Def help_menu():
+
+   Print(“This is a simple budget tracker.”)
+
+   Print(“You can add, view, update, delete and save your records.”)
+
+ 
+
+# Main loop
+
+Welcome_screen()
+
+While True:
+
+   Main_menu()
+
+   Choice = input(“Enter choice: “)
+
+   İf choice == “1”:
+
+       Add_record()
+
+   Elif choice == “2”:
+
+       View_records()
+
+   Elif choice == “3”:
+
+       Search_record()
+
+   Elif choice == “4”:
+
+       Update_record()
+
+   Elif choice == “5”:
+
+       Delete_record()
+
+   Elif choice == “6”:
+
+       Show_summary()
+
+   Elif choice == “7”:
+
+       Save_to_file()
+
+   Elif choice == “8”:
+
+       Load_from_file()
+
+   Elif choice == “9”:
+
+       Clear_all_data()
+
+   Elif choice == “10”:
+
+       Help_menu()
+
+   Elif choice == “0”:
+
+       Print(“Goodbye!”)
+
+       Break
+
+   Else:
+
+       Print(“Invalid option. Try again.”)
